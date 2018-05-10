@@ -1,8 +1,8 @@
 (function drag_upload() {
     if (window.FileReader) {
 
-        var list = document.getElementById('list'),
-            cnt = document.getElementById('container');
+        var list = document.getElementById('list'),//图片显示列表
+            cnt = document.getElementById('container');//图片的容器
 
         // 判断是否图片
         function isImage(type) {
@@ -24,6 +24,7 @@
             evt.preventDefault();
 
             var files = evt.dataTransfer.files;
+            console.log(files);
 
             for (var i = 0, f; f = files[i]; i++) {
 
@@ -41,6 +42,7 @@
                 if (isImg) {
                     reader.onload = (function (theFile) {
                         return function (e) {
+                            console.log(e.target.result);//这个即是上传图片的base64码,可以直接上传到服务器
                             img = '<img class="preview" src="' + e.target.result + '" title="' + theFile.name + '"/>';
                             looks(theFile, img);
                         };
@@ -65,10 +67,10 @@
             evt.preventDefault();
         }
 
-        cnt.addEventListener('dragenter', handleDragEnter, false);
-        cnt.addEventListener('dragover', handleDragOver, false);
-        cnt.addEventListener('drop', handleFileSelect, false);
-        cnt.addEventListener('dragleave', handleDragLeave, false);
+        cnt.addEventListener('dragenter', handleDragEnter, false); //加样式
+        cnt.addEventListener('dragover', handleDragOver, false);//禁止默认事件
+        cnt.addEventListener('drop', handleFileSelect, false);//读取图片
+        cnt.addEventListener('dragleave', handleDragLeave, false);//取消样式
 
     } else {
         document.getElementById('section').innerHTML = '换个浏览器吧';
